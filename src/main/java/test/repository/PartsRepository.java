@@ -2,7 +2,7 @@ package test.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import test.bean.ComputerComponent;
+import test.entity.ComputerComponent;
 
 //репозиторий это более высокий уровень абстракции чем DAO. Репозитории это из DDD
 @Repository("PartsRepository")

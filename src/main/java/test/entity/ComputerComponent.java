@@ -1,11 +1,11 @@
-package test.bean;
+package test.entity;
 
 import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 
-@Data
+@@Data // Это аннотация Lombok. Позволяет автоматически генерировать геттеры и сеттеры
 @Entity
 @Table(name = "Components")
 public class ComputerComponent {
@@ -32,5 +32,4 @@ public class ComputerComponent {
     @Column(name = "primary")
     private boolean primary;
 
-    // геттеры и сеттеры Spring может подставить сам
 }
