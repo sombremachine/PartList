@@ -5,8 +5,8 @@ import lombok.Data;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 
-@@Data // Это аннотация Lombok. Позволяет автоматически генерировать геттеры и сеттеры
-@Entity
+@Data  // Это аннотация Lombok. Позволяет автоматически генерировать геттеры и сеттеры
+@Entity // Снова из DDD
 @Table(name = "Components")
 public class ComputerComponent {
 
@@ -31,5 +31,4 @@ public class ComputerComponent {
 
     @Column(name = "primary")
     private boolean primary;
-
 }
