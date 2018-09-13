@@ -7,14 +7,14 @@ import javax.validation.constraints.NotEmpty;
 
 @Data  // Это аннотация Lombok. Позволяет автоматически генерировать геттеры и сеттеры
 @Entity // Снова из DDD
-@Table(name = "Components")
+@Table(name = "components")
 public class ComputerComponent {
 
     // тут указываем соотношения полей и столбцов таблицы
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "comp_id")
+    @Column(name = "id")
     private int id;
 
     @Column(name = "name")
@@ -29,6 +29,6 @@ public class ComputerComponent {
     @NotEmpty(message = "*Please provide count")
     private int count;
 
-    @Column(name = "primary")
+    @Column(name = "isPrimary")
     private boolean primary;
 }

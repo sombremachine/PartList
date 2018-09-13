@@ -5,6 +5,10 @@ import org.springframework.stereotype.Repository;
 import test.entity.ComputerComponent;
 
 //репозиторий это более высокий уровень абстракции чем DAO. Репозитории это из DDD
+//@Repository - (Доменный слой) Аннотация показывает, что класс функционирует как репозиторий и требует наличия
+// прозрачной трансляции исключений. Преимуществом трансляции исключений является то, что слой сервиса будет иметь
+// дело с общей иерархией исключений от Spring (DataAccessException) вне зависимости от используемых технологий доступа
+// к данным в слое данных.
 @Repository("ComponentsRepository")
 public interface ComponentsRepository extends JpaRepository<ComputerComponent, Long> {
     //Spring сам формирует запросы в зависимости от имени метода.
