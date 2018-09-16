@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:action="@{/component/update/{id}(id=${component.id})}" method="post" enctype="multipart/form-data">
+
+    <table>
+        <tr>
+            <!--<th>id</th>-->
+            <th>name</th>
+            <th>manufacturer</th>
+            <th>count</th>
+            <th>primary</th>
+        </tr>
+        <tr>
+            <!--<td><input name="id" th:text="${component.id}" /></td>-->
+            <td><input name="name" th:value="${component.name}" /></td>
+            <td><input name="manufacturer" th:value="${component.manufacturer}" /></td>
+            <td><input name="count" th:value="${component.count}" /></td><
+            <td><input name="primary" th:value="${component.primary}" /></td>
+        </tr>
+    </table>
+    <div>
+        <input type="submit" value="Create developer" name="button"/>
+    </div>
+</form>
+</body>
+</html>

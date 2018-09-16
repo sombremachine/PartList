@@ -23,4 +23,10 @@ public class TestService {
         return repository.findAll();
     }
 
+    public ComputerComponent findComponentById(Integer id) {
+        return repository.findById(id).get();
+    }
+    public Integer deleteById(Integer id) {
+        return repository.deleteById(id);
+    }
 }

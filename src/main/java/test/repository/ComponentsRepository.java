@@ -4,6 +4,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import test.entity.ComputerComponent;
 
+import java.util.Optional;
+
 //репозиторий это более высокий уровень абстракции чем DAO. Репозитории это из DDD
 //@Repository - (Доменный слой) Аннотация показывает, что класс функционирует как репозиторий и требует наличия
 // прозрачной трансляции исключений. Преимуществом трансляции исключений является то, что слой сервиса будет иметь
@@ -11,6 +13,8 @@ import test.entity.ComputerComponent;
 // к данным в слое данных.
 @Repository("ComponentsRepository")
 public interface ComponentsRepository extends JpaRepository<ComputerComponent, Long> {
+    Optional<ComputerComponent> findById(Integer id);
+    Integer deleteById(Integer id);
     //Spring сам формирует запросы в зависимости от имени метода.
     //Но можно указать свой запрос: @Query("select b from Bank b where b.name = :name")
 
