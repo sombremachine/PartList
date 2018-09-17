@@ -6,26 +6,26 @@
     <title>Title</title>
 </head>
 <body>
-<form th:action="@{/component/update/{id}(id=${component.id})}" method="post" enctype="multipart/form-data">
+<form action="#" th:action="@{/component/update}"  th:object="${component}"  method="post">
 
     <table>
         <tr>
-            <!--<th>id</th>-->
+            <th>id</th>
             <th>name</th>
             <th>manufacturer</th>
             <th>count</th>
             <th>primary</th>
         </tr>
         <tr>
-            <!--<td><input name="id" th:text="${component.id}" /></td>-->
-            <td><input name="name" th:value="${component.name}" /></td>
-            <td><input name="manufacturer" th:value="${component.manufacturer}" /></td>
-            <td><input name="count" th:value="${component.count}" /></td><
-            <td><input name="primary" th:value="${component.primary}" /></td>
+            <td><input type="text" th:field="*{id}" th:value="${component.id}" /></td>
+            <td><input type="text" th:field="*{name}" th:value="${component.name}" /></td>
+            <td><input type="text" th:field="*{manufacturer}" th:value="${component.manufacturer}" /></td>
+            <td><input type="text" th:field="*{count}" th:value="${component.count}" /></td><
+            <td><input type="text" th:field="*{primary}" th:value="${component.primary}" /></td>
         </tr>
     </table>
     <div>
-        <input type="submit" value="Create developer" name="button"/>
+        <input type="submit" value="Update" name="button"/>
     </div>
 </form>
 </body>

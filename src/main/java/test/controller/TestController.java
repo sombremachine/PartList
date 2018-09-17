@@ -2,6 +2,7 @@ package test.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -10,6 +11,7 @@ import test.entity.ComputerComponent;
 import test.service.TestService;
 
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +26,7 @@ public class TestController {
 
     //@RequestMapping - Аннотация используется для маппинга url-адреса запроса на указанный метод или класс.
     // Можно указывать конкретный HTTP-метод, который будет обрабатываться (GET/POST), передавать параметры запроса.
-    @RequestMapping(value={"/m"}, method = RequestMethod.GET)
+    @RequestMapping(value={"/"}, method = RequestMethod.GET)
     public ModelAndView mainscreen() {
         ModelAndView modelAndView = new ModelAndView();
         List<ComputerComponent> components = new ArrayList<>();
@@ -55,8 +57,9 @@ public class TestController {
         return modelAndView;
     }
 
-    @RequestMapping(value={"/component/update/{id}"}, method = RequestMethod.POST)
-    public ModelAndView updateComponent(@PathVariable Integer id) {
+    @RequestMapping(value={"/component/update"}, method = RequestMethod.POST)
+    public ModelAndView updateComponent(@Valid ComputerComponent component, BindingResult bindingResult) {
+        service.saveComponent(component);
         ModelAndView modelAndView = new ModelAndView();
         List<ComputerComponent> components = new ArrayList<>();
         components.addAll(service.getAllComponents());

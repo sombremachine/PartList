@@ -29,4 +29,8 @@ public class TestService {
     public Integer deleteById(Integer id) {
         return repository.deleteById(id);
     }
+
+    public void saveComponent(ComputerComponent component) {
+        repository.save(component);
+    }
 }

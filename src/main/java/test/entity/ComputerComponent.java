@@ -26,7 +26,6 @@ public class ComputerComponent {
     private String manufacturer;
 
     @Column(name = "count")
-    @NotEmpty(message = "*Please provide count")
     private int count;
 
     @Column(name = "isPrimary")
