@@ -42,6 +42,16 @@
             <td th:text="${componentItem.primary}"></td>
             <td><a th:href="@{/component/edit/{id}(id=${componentItem.id})}">edit</a></td>
             <td><a th:href="@{/component/delete/{id}(id=${componentItem.id})}">delete</a></td>
+            <!--<td>-->
+                <!--<form action="#" th:action="@{/component/edit/{id}(id=${componentItem.id})}}"  method="post">-->
+                    <!--<button class="btn btn-md btn-warning btn-block" type="edit">edit</button>-->
+                <!--</form>-->
+            <!--</td>-->
+            <!--<td>-->
+                <!--<form action="#" th:action="@{/component/delete/{id}(id=${componentItem.id})}}"  method="post">-->
+                    <!--<button class="btn btn-md btn-warning btn-block" type="edit">delete</button>-->
+                <!--</form>-->
+            <!--</td>-->
         </tr>
     </table>
 </body>
