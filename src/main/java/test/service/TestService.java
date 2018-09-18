@@ -7,11 +7,13 @@ import test.repository.ComponentsRepository;
 
 import java.util.List;
 
+
 //(Сервис-слой приложения) Аннотация, объявляющая, что этот класс представляет собой сервис – компонент сервис-слоя.
 //Сервис является подтипом класса @Component. Использование данной аннотации позволит искать бины-сервисы автоматически.
 
 @Service("TestService")
 public class TestService {
+    @Autowired
     private ComponentsRepository repository;
 
     @Autowired
@@ -32,5 +34,9 @@ public class TestService {
 
     public void saveComponent(ComputerComponent component) {
         repository.save(component);
+    }
+
+    public List<ComputerComponent> fuzzySearch(String searchTerm) {
+        return repository.findByName(searchTerm);
     }
 }

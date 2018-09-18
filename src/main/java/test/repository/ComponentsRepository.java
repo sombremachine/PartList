@@ -1,9 +1,11 @@
 package test.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import test.entity.ComputerComponent;
 
+import java.util.List;
 import java.util.Optional;
 
 //репозиторий это более высокий уровень абстракции чем DAO. Репозитории это из DDD
@@ -15,7 +17,9 @@ import java.util.Optional;
 public interface ComponentsRepository extends JpaRepository<ComputerComponent, Long> {
     Optional<ComputerComponent> findById(Integer id);
     Integer deleteById(Integer id);
+    List<ComputerComponent> findAll();
     //Spring сам формирует запросы в зависимости от имени метода.
     //Но можно указать свой запрос: @Query("select b from Bank b where b.name = :name")
 
+    List<ComputerComponent> findByName(String name);
 }

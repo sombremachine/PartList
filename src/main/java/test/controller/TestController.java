@@ -6,6 +6,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import test.entity.ComputerComponent;
 import test.service.TestService;
@@ -18,7 +19,7 @@ import java.util.List;
 //@Controller - (Слой представления) Аннотация для маркировки java класса, как класса контроллера.
 // Данный класс представляет собой компонент, похожий на обычный сервлет (HttpServlet) (работающий с
 // объектами HttpServletRequest и HttpServletResponse), но с расширенными возможностями от Spring Framework.
-@Controller
+@Controller("TestController")
 public class TestController {
     // Сюда подставится экземпляр класса TestService
     @Autowired
@@ -57,12 +58,23 @@ public class TestController {
         return modelAndView;
     }
 
+    @Transactional
     @RequestMapping(value={"/component/update"}, method = RequestMethod.POST)
     public ModelAndView updateComponent(@Valid ComputerComponent component, BindingResult bindingResult) {
         service.saveComponent(component);
         ModelAndView modelAndView = new ModelAndView();
         List<ComputerComponent> components = new ArrayList<>();
         components.addAll(service.getAllComponents());
+        modelAndView.addObject("components", components);
+        modelAndView.setViewName("list");
+        return modelAndView;
+    }
+
+    @Transactional
+    @RequestMapping(value={"/component/search"}, method = RequestMethod.POST)
+    public ModelAndView searchComponent(@RequestParam(value = "name", required = false) String componentName) {
+        ModelAndView modelAndView = new ModelAndView();
+        List<ComputerComponent> components = service.fuzzySearch(componentName);
         modelAndView.addObject("components", components);
         modelAndView.setViewName("list");
         return modelAndView;

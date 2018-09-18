@@ -1,9 +1,9 @@
 package test.entity;
 
 import lombok.Data;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Data  // Это аннотация Lombok. Позволяет автоматически генерировать геттеры и сеттеры
 @Entity // Снова из DDD

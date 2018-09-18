@@ -7,6 +7,17 @@
 </head>
 <body>
     hello =)
+    <form action="#" th:action="@{/component/search}"  method="post">
+
+        <table>
+            <tr>
+                <td><input type="text" id="name" name="name" th:placeholder="name" /></td>
+            </tr>
+        </table>
+        <div>
+            <input type="submit" value="Search" name="button"/>
+        </div>
+    </form>
     <table>
         <tr>
             <th>id</th>
@@ -17,14 +28,14 @@
             <th>edit</th>
             <th>delete</th>
         </tr>
-        <tr th:each="component : ${components}">
-            <td th:text="${component.id}"></td>
-            <td th:text="${component.name}"></td>
-            <td th:text="${component.manufacturer}"></td>
-            <td th:text="${component.count}"></td>
-            <td th:text="${component.primary}"></td>
-            <td><a th:href="@{/component/edit/{id}(id=${component.id})}">edit</a></td>
-            <td><a th:href="@{/component/delete/{id}(id=${component.id})}">delete</a></td>
+        <tr th:each="componentItem : ${components}">
+            <td th:text="${componentItem.id}"></td>
+            <td th:text="${componentItem.name}"></td>
+            <td th:text="${componentItem.manufacturer}"></td>
+            <td th:text="${componentItem.count}"></td>
+            <td th:text="${componentItem.primary}"></td>
+            <td><a th:href="@{/component/edit/{id}(id=${componentItem.id})}">edit</a></td>
+            <td><a th:href="@{/component/delete/{id}(id=${componentItem.id})}">delete</a></td>
         </tr>
     </table>
 </body>
