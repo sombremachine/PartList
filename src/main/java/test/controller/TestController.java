@@ -75,6 +75,7 @@ public class TestController {
     public ModelAndView searchComponent(@RequestParam(value = "name", required = false) String componentName) {
         ModelAndView modelAndView = new ModelAndView();
         List<ComputerComponent> components = service.fuzzySearch(componentName);
+        modelAndView.addObject("searching", componentName);
         modelAndView.addObject("components", components);
         modelAndView.setViewName("list");
         return modelAndView;

@@ -8,15 +8,21 @@
 <body>
     hello =)
     <form action="#" th:action="@{/component/search}"  method="post">
-
         <table>
             <tr>
                 <td><input type="text" id="name" name="name" th:placeholder="name" /></td>
+                <td><input type="submit" value="Search" name="button"/></td>
             </tr>
+
         </table>
-        <div>
-            <input type="submit" value="Search" name="button"/>
-        </div>
+    </form>
+    <form th:action="@{/}" method="get">
+    <table>
+        <tr th:if="${searching} != null">
+            <td><p>Search: <span th:text="*{searching}">searching</span>.</p></td>
+            <td><button class="btn btn-md btn-warning btn-block" type="Submit">reset</button></td>
+        </tr>
+    </table>
     </form>
     <table>
         <tr>
