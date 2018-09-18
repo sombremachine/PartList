@@ -33,6 +33,7 @@ public class TestController {
         List<ComputerComponent> components = new ArrayList<>();
         components.addAll(service.getAllComponents());
         modelAndView.addObject("components", components);
+        modelAndView.addObject("count", getComputersCount());
         modelAndView.setViewName("list");
         return modelAndView;
     }
@@ -54,6 +55,7 @@ public class TestController {
         List<ComputerComponent> components = new ArrayList<>();
         components.addAll(service.getAllComponents());
         modelAndView.addObject("components", components);
+        modelAndView.addObject("count", getComputersCount());
         modelAndView.setViewName("list");
         return modelAndView;
     }
@@ -66,6 +68,7 @@ public class TestController {
         List<ComputerComponent> components = new ArrayList<>();
         components.addAll(service.getAllComponents());
         modelAndView.addObject("components", components);
+        modelAndView.addObject("count", getComputersCount());
         modelAndView.setViewName("list");
         return modelAndView;
     }
@@ -77,7 +80,12 @@ public class TestController {
         List<ComputerComponent> components = service.fuzzySearch(componentName);
         modelAndView.addObject("searching", componentName);
         modelAndView.addObject("components", components);
+        modelAndView.addObject("count", getComputersCount());
         modelAndView.setViewName("list");
         return modelAndView;
+    }
+
+    int getComputersCount(){
+        return service.getComputersCount();
     }
 }

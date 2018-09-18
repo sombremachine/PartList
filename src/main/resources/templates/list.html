@@ -54,5 +54,10 @@
             <!--</td>-->
         </tr>
     </table>
+    <table>
+        <tr th:if="${count} != null">
+            <td><p>Total: <span th:text="*{count}">searching</span>.</p></td>
+        </tr>
+    </table>
 </body>
 </html>

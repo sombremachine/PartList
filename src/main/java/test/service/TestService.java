@@ -39,4 +39,10 @@ public class TestService {
     public List<ComputerComponent> fuzzySearch(String searchTerm) {
         return repository.findByName(searchTerm);
     }
+
+    public int getComputersCount() {
+        List<ComputerComponent> result = repository.findByPrimary(true);
+        return result.stream().min((a,b) -> Integer.compare(a.getCount(),b.getCount())).get().getCount();
+//        return 0;
+    }
 }
