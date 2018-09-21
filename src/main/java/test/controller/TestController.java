@@ -15,6 +15,7 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 //@Controller - (Слой представления) Аннотация для маркировки java класса, как класса контроллера.
 // Данный класс представляет собой компонент, похожий на обычный сервлет (HttpServlet) (работающий с
@@ -27,11 +28,16 @@ public class TestController {
 
     //@RequestMapping - Аннотация используется для маппинга url-адреса запроса на указанный метод или класс.
     // Можно указывать конкретный HTTP-метод, который будет обрабатываться (GET/POST), передавать параметры запроса.
-    @RequestMapping(value={"/"}, method = RequestMethod.GET)
-    public ModelAndView mainscreen() {
+    @RequestMapping(value={"/","/{pagenum}"}, method = RequestMethod.GET)
+    public ModelAndView mainscreen(@PathVariable Optional<Integer> pagenum) {
         ModelAndView modelAndView = new ModelAndView();
         List<ComputerComponent> components = new ArrayList<>();
-        components.addAll(service.getAllComponents());
+        //components.addAll(service.getAllComponents());
+        if (pagenum.isPresent()) {
+            components.addAll(service.getpaged(pagenum.get(), 10));
+        }else{
+            components.addAll(service.getpaged(0, 10));
+        }
         modelAndView.addObject("components", components);
         modelAndView.addObject("count", getComputersCount());
         modelAndView.setViewName("list");
@@ -49,28 +55,30 @@ public class TestController {
 
     @Transactional
     @RequestMapping(value={"/component/delete/{id}"}, method = RequestMethod.GET)
-    public ModelAndView deleteComponent(@PathVariable Integer id) {
+    public String deleteComponent(@PathVariable Integer id) {
         service.deleteById(id);
-        ModelAndView modelAndView = new ModelAndView();
-        List<ComputerComponent> components = new ArrayList<>();
-        components.addAll(service.getAllComponents());
-        modelAndView.addObject("components", components);
-        modelAndView.addObject("count", getComputersCount());
-        modelAndView.setViewName("list");
-        return modelAndView;
+//        ModelAndView modelAndView = new ModelAndView();
+//        List<ComputerComponent> components = new ArrayList<>();
+//        components.addAll(service.getAllComponents());
+//        modelAndView.addObject("components", components);
+//        modelAndView.addObject("count", getComputersCount());
+//        modelAndView.setViewName("list");
+//        return modelAndView;
+        return "redirect:/";
     }
 
     @Transactional
     @RequestMapping(value={"/component/update"}, method = RequestMethod.POST)
-    public ModelAndView updateComponent(@Valid ComputerComponent component, BindingResult bindingResult) {
+    public String updateComponent(@Valid ComputerComponent component, BindingResult bindingResult) {
         service.saveComponent(component);
-        ModelAndView modelAndView = new ModelAndView();
-        List<ComputerComponent> components = new ArrayList<>();
-        components.addAll(service.getAllComponents());
-        modelAndView.addObject("components", components);
-        modelAndView.addObject("count", getComputersCount());
-        modelAndView.setViewName("list");
-        return modelAndView;
+//        ModelAndView modelAndView = new ModelAndView();
+//        List<ComputerComponent> components = new ArrayList<>();
+//        components.addAll(service.getAllComponents());
+//        modelAndView.addObject("components", components);
+//        modelAndView.addObject("count", getComputersCount());
+//        modelAndView.setViewName("list");
+//        return modelAndView;
+        return "redirect:/";
     }
 
     @Transactional

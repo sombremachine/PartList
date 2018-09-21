@@ -23,4 +23,5 @@ public interface ComponentsRepository extends JpaRepository<ComputerComponent, L
 
     List<ComputerComponent> findByName(String name);
     List<ComputerComponent> findByPrimary(boolean primary);
+
 }

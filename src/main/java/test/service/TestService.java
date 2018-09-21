@@ -1,10 +1,13 @@
 package test.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import test.entity.ComputerComponent;
 import test.repository.ComponentsRepository;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 
@@ -44,5 +47,15 @@ public class TestService {
         List<ComputerComponent> result = repository.findByPrimary(true);
         return result.stream().min((a,b) -> Integer.compare(a.getCount(),b.getCount())).get().getCount();
 //        return 0;
+    }
+
+    public List<ComputerComponent> getpaged(int i, int i1) {
+        List<ComputerComponent> result = new ArrayList<>();
+        repository.findAll(new PageRequest(i,i1)).forEach((c) -> result.add(c));
+        return result;
+    }
+
+    public long getCount(){
+        return repository.count();
     }
 }
