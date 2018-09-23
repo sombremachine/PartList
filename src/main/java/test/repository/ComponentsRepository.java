@@ -22,6 +22,7 @@ public interface ComponentsRepository extends JpaRepository<ComputerComponent, L
     //Но можно указать свой запрос: @Query("select b from Bank b where b.name = :name")
 
     List<ComputerComponent> findByName(String name);
-    List<ComputerComponent> findByPrimary(boolean primary);
+    List<ComputerComponent> findByNeed(boolean primary);
 
+//    List<ComputerComponent> findAllByOderByNeed();
 }

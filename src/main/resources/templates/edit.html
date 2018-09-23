@@ -20,7 +20,7 @@
             <td  th:text="${component.id}"></td>
             <td><input type="text" th:field="*{name}" th:value="${component.name}" /></td>
             <td><input type="text" th:field="*{count}" th:value="${component.count}" /></td>
-            <td><input type="checkbox" th:field="*{primary}" /></td>
+            <td><input type="checkbox" th:field="*{need}" /></td>
         </tr>
     </table>
     <input type="hidden" th:field="*{id}" th:value="${component.id}" />

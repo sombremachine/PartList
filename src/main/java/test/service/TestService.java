@@ -2,6 +2,7 @@ package test.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import test.entity.ComputerComponent;
 import test.repository.ComponentsRepository;
@@ -25,7 +26,8 @@ public class TestService {
     }
 
     public List<ComputerComponent> getAllComponents(){
-        return repository.findAll();
+//        return repository.findAllByOderByNeed();
+        return null;
     }
 
     public ComputerComponent findComponentById(Integer id) {
@@ -44,7 +46,7 @@ public class TestService {
     }
 
     public int getComputersCount() {
-        List<ComputerComponent> result = repository.findByPrimary(true);
+        List<ComputerComponent> result = repository.findByNeed(true);
         int count = 0;
         if ((result != null)&&(!result.isEmpty())) {
             count = result.stream().min((a, b) -> Integer.compare(a.getCount(), b.getCount())).get().getCount();
@@ -52,9 +54,13 @@ public class TestService {
         return count;
     }
 
-    public List<ComputerComponent> getpaged(int i, int i1) {
+    public List<ComputerComponent> getpaged(int i, int i1, Sort.Direction sortDirection) {
         List<ComputerComponent> result = new ArrayList<>();
-        repository.findAll(new PageRequest(i,i1)).forEach((c) -> result.add(c));
+        if (sortDirection != null) {
+            repository.findAll(new PageRequest(i, i1, sortDirection, "need", "id")).forEach((c) -> result.add(c));
+        }else{
+            repository.findAll(new PageRequest(i, i1)).forEach((c) -> result.add(c));
+        }
         return result;
     }
 

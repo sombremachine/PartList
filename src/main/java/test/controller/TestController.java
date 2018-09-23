@@ -1,6 +1,7 @@
 package test.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,13 +31,22 @@ public class TestController {
     //@RequestMapping - Аннотация используется для маппинга url-адреса запроса на указанный метод или класс.
     // Можно указывать конкретный HTTP-метод, который будет обрабатываться (GET/POST), передавать параметры запроса.
     @RequestMapping(value={"/","/{pagenum}"}, method = RequestMethod.GET)
-    public ModelAndView mainscreen(@PathVariable Optional<Integer> pagenum) {
+    public ModelAndView mainscreen(@PathVariable Optional<Integer> pagenum,@RequestParam(value = "sort", required = false) String sort) {
         ModelAndView modelAndView = new ModelAndView();
         List<ComputerComponent> components = new ArrayList<>();
+        Sort.Direction sortDirection = null;
+        if (sort != null){
+            if (sort.equals("asc")){
+                sortDirection = Sort.Direction.ASC;
+            }else{
+                sortDirection = Sort.Direction.DESC;
+            }
+        }
+
         if (pagenum.isPresent()) {
-            components.addAll(service.getpaged(pagenum.get(), itemsOnPage));
+            components.addAll(service.getpaged(pagenum.get(), itemsOnPage, sortDirection));
         }else{
-            components.addAll(service.getpaged(0, itemsOnPage));
+            components.addAll(service.getpaged(0, itemsOnPage, sortDirection));
         }
         List<Integer> pages = new ArrayList<>();
 

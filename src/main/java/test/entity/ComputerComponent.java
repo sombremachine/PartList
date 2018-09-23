@@ -24,6 +24,6 @@ public class ComputerComponent {
     @Column(name = "count")
     private Integer count;
 
-    @Column(name = "isPrimary")
-    private Boolean primary;
+    @Column(name = "need")
+    private Boolean need;
 }
