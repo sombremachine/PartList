@@ -13,21 +13,17 @@ public class ComputerComponent {
     // тут указываем соотношения полей и столбцов таблицы
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", updatable = false, nullable = false)
+    private Integer id;
 
     @Column(name = "name")
     @NotEmpty(message = "*Please provide a name for configuration")
     private String name;
 
-    @Column(name = "manufacturer")
-    @NotEmpty(message = "*Please provide a manufacturer")
-    private String manufacturer;
-
     @Column(name = "count")
-    private int count;
+    private Integer count;
 
     @Column(name = "isPrimary")
-    private boolean primary;
+    private Boolean primary;
 }

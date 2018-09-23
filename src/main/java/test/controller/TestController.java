@@ -43,6 +43,7 @@ public class TestController {
         for (int i = 0; i < Math.ceil((float)service.getCount()/itemsOnPage); i++){
             pages.add(i);
         }
+        modelAndView.addObject("component", new ComputerComponent());
         modelAndView.addObject("pages", pages);
         modelAndView.addObject("components", components);
         modelAndView.addObject("count", getComputersCount());

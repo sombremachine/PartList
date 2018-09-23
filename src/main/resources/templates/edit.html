@@ -10,18 +10,17 @@
 
     <table>
         <tr>
-            <!--<th>id</th>-->
-            <th>name</th>
-            <th>manufacturer</th>
-            <th>count</th>
-            <th>primary</th>
+            <th th:text="#{componentId}">id</th>
+            <th th:text="#{componentName}">name</th>
+            <th th:text="#{componentCount}">count</th>
+            <th th:text="#{componentPrimary}">primary</th>
         </tr>
         <tr>
             <!--<td><input type="hidden" th:field="*{id}" th:value="${component.id}" /></td>-->
+            <td  th:text="${component.id}"></td>
             <td><input type="text" th:field="*{name}" th:value="${component.name}" /></td>
-            <td><input type="text" th:field="*{manufacturer}" th:value="${component.manufacturer}" /></td>
-            <td><input type="text" th:field="*{count}" th:value="${component.count}" /></td><
-            <td><input type="text" th:field="*{primary}" th:value="${component.primary}" /></td>
+            <td><input type="text" th:field="*{count}" th:value="${component.count}" /></td>
+            <td><input type="checkbox" th:field="*{primary}" /></td>
         </tr>
     </table>
     <input type="hidden" th:field="*{id}" th:value="${component.id}" />

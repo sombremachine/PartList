@@ -19,29 +19,27 @@
     <form th:action="@{/}" method="get">
     <table>
         <tr th:if="${searching} != null">
-            <td><p>Search: <span th:text="*{searching}">searching</span>.</p></td>
-            <td><button class="btn btn-md btn-warning btn-block" type="Submit">reset</button></td>
+            <td><p>Search: <span th:text="*{searching}">Поиск:</span>.</p></td>
+            <td><button class="btn btn-md btn-warning btn-block" type="Submit" th:text="#{reset}">reset</button></td>
         </tr>
     </table>
     </form>
     <table>
         <tr>
-            <th>id</th>
-            <th>name</th>
-            <th>manufacturer</th>
-            <th>count</th>
-            <th>primary</th>
-            <th>edit</th>
-            <th>delete</th>
+            <th th:text="#{componentId}">id</th>
+            <th th:text="#{componentName}">name</th>
+            <th th:text="#{componentCount}">count</th>
+            <th th:text="#{componentPrimary}">primary</th>
+            <th th:text="#{componentEdit}">edit</th>
+            <th th:text="#{componentDelete}">delete</th>
         </tr>
         <tr th:each="componentItem : ${components}">
             <td th:text="${componentItem.id}"></td>
             <td th:text="${componentItem.name}"></td>
-            <td th:text="${componentItem.manufacturer}"></td>
             <td th:text="${componentItem.count}"></td>
-            <td th:text="${componentItem.primary}"></td>
-            <td><a th:href="@{/component/edit/{id}(id=${componentItem.id})}">edit</a></td>
-            <td><a th:href="@{/component/delete/{id}(id=${componentItem.id})}">delete</a></td>
+            <td th:text="${componentItem.primary}?#{isPrimary}:#{isNotPrimary}"></td>
+            <td><a th:href="@{/component/edit/{id}(id=${componentItem.id})}" th:text="#{edit}">edit</a></td>
+            <td><a th:href="@{/component/delete/{id}(id=${componentItem.id})}" th:text="#{delete}">delete</a></td>
             <!--<td>-->
                 <!--<form action="#" th:action="@{/component/edit/{id}(id=${componentItem.id})}}"  method="post">-->
                     <!--<button class="btn btn-md btn-warning btn-block" type="edit">edit</button>-->
@@ -53,15 +51,38 @@
                 <!--</form>-->
             <!--</td>-->
         </tr>
+        <form action="#" th:action="@{/component/update}" th:object="${component}"   method="post">
+            <!--<table>-->
+                <tr>
+                    <td></td>
+                    <td><input type="text" th:field="*{name}"  /></td>
+                    <td><input type="text" th:field="*{count}"  /></td>
+                    <td><input type="checkbox" th:field="*{primary}" /></td>
+                    <td><input type="submit" value="Update" name="button"/></td>
+                    <td></td>
+                </tr>
+            <!--</table>-->
+        </form>
     </table>
+    <!--<form action="#" th:action="@{/component/update}" th:object="${component}"   method="post">-->
+        <!--<table>-->
+            <!--<tr>-->
+                <!--<td></td>-->
+                <!--<td><input type="text" th:field="*{name}"  /></td>-->
+                <!--<td><input type="text" th:field="*{count}"  /></td>-->
+                <!--<td><input type="checkbox" th:field="*{primary}" /></td>-->
+                <!--<td><input type="submit" value="Update" name="button"/></td>-->
+            <!--</tr>-->
+        <!--</table>-->
+    <!--</form>-->
     <table>
         <tr th:if="${count} != null">
-            <td><p>Total: <span th:text="*{count}">searching</span>.</p></td>
+            <td><p><span th:text="#{total}"></span>: <span th:text="*{count}"></span>.</p></td>
         </tr>
     </table>
     <table>
         <tr >
-            <td>Pages: </td>
+            <td th:text="#{pages}">Pages: </td>
             <td th:each="page : ${pages}"><a th:href="@{/{pageNum}(pageNum=${page})}" th:text="${page}">-</a></td>
         </tr>
     </table>
