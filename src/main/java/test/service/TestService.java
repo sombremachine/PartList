@@ -45,8 +45,11 @@ public class TestService {
 
     public int getComputersCount() {
         List<ComputerComponent> result = repository.findByPrimary(true);
-        return result.stream().min((a,b) -> Integer.compare(a.getCount(),b.getCount())).get().getCount();
-//        return 0;
+        int count = 0;
+        if ((result != null)&&(!result.isEmpty())) {
+            count = result.stream().min((a, b) -> Integer.compare(a.getCount(), b.getCount())).get().getCount();
+        }
+        return count;
     }
 
     public List<ComputerComponent> getpaged(int i, int i1) {

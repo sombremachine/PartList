@@ -22,6 +22,7 @@ import java.util.Optional;
 // объектами HttpServletRequest и HttpServletResponse), но с расширенными возможностями от Spring Framework.
 @Controller("TestController")
 public class TestController {
+    private static final int itemsOnPage = 10;
     // Сюда подставится экземпляр класса TestService
     @Autowired
     private TestService service;
@@ -32,12 +33,17 @@ public class TestController {
     public ModelAndView mainscreen(@PathVariable Optional<Integer> pagenum) {
         ModelAndView modelAndView = new ModelAndView();
         List<ComputerComponent> components = new ArrayList<>();
-        //components.addAll(service.getAllComponents());
         if (pagenum.isPresent()) {
-            components.addAll(service.getpaged(pagenum.get(), 10));
+            components.addAll(service.getpaged(pagenum.get(), itemsOnPage));
         }else{
-            components.addAll(service.getpaged(0, 10));
+            components.addAll(service.getpaged(0, itemsOnPage));
         }
+        List<Integer> pages = new ArrayList<>();
+
+        for (int i = 0; i < Math.ceil((float)service.getCount()/itemsOnPage); i++){
+            pages.add(i);
+        }
+        modelAndView.addObject("pages", pages);
         modelAndView.addObject("components", components);
         modelAndView.addObject("count", getComputersCount());
         modelAndView.setViewName("list");

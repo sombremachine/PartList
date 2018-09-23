@@ -59,5 +59,11 @@
             <td><p>Total: <span th:text="*{count}">searching</span>.</p></td>
         </tr>
     </table>
+    <table>
+        <tr >
+            <td>Pages: </td>
+            <td th:each="page : ${pages}"><a th:href="@{/{pageNum}(pageNum=${page})}" th:text="${page}">-</a></td>
+        </tr>
+    </table>
 </body>
 </html>
