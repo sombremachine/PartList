@@ -53,7 +53,9 @@ public class TestController {
                 }
             }
         }
+        Integer currentPage = 0;
         if (pagenum.isPresent()) {
+            currentPage = pagenum.get();
             components.addAll(service.getpaged(pagenum.get(), itemsOnPage, sortDirection));
         }else{
             components.addAll(service.getpaged(0, itemsOnPage, sortDirection));
@@ -66,6 +68,7 @@ public class TestController {
         modelAndView.addObject("sorting", sort);
         modelAndView.addObject("component", new ComputerComponent());
         modelAndView.addObject("pages", pages);
+        modelAndView.addObject("currentPage", currentPage);
         modelAndView.addObject("components", components);
         modelAndView.addObject("count", getComputersCount());
         modelAndView.setViewName("list");
@@ -100,6 +103,7 @@ public class TestController {
     public ModelAndView searchComponent(@RequestParam(value = "name", required = false) String componentName) {
         ModelAndView modelAndView = new ModelAndView();
         List<ComputerComponent> components = service.fuzzySearch(componentName);
+        modelAndView.addObject("component", new ComputerComponent());
         modelAndView.addObject("searching", componentName);
         modelAndView.addObject("components", components);
         modelAndView.addObject("count", getComputersCount());

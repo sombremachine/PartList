@@ -59,7 +59,7 @@ public class TestService {
         if (sortDirection != null) {
             repository.findAll(new PageRequest(i, i1, sortDirection, "need", "id")).forEach((c) -> result.add(c));
         }else{
-            repository.findAll(new PageRequest(i, i1)).forEach((c) -> result.add(c));
+            repository.findAll(new PageRequest(i, i1, Sort.Direction.ASC,  "id")).forEach((c) -> result.add(c));
         }
         return result;
     }
