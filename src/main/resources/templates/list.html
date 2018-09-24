@@ -2,82 +2,98 @@
 <html lang="en">
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Components</title>
 </head>
 <body>
-    hello =)
-    <form action="#" th:action="@{/component/search}"  method="post">
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+        </div>
+        <div class="col-sm">
+        <form action="#" th:action="@{/component/search}"  method="post">
+            <table>
+                <tr>
+                    <td><input type="text" id="name" name="name" th:placeholder="name" /></td>
+                    <td><input type="submit" value="Search" name="button"/></td>
+                </tr>
+
+            </table>
+        </form>
+        <form th:action="@{/}" method="get">
+        <table>
+            <tr th:if="${searching} != null">
+                <td><p>Search: <span th:text="*{searching}">Поиск:</span>.</p></td>
+                <td><button class="btn btn-md btn-warning btn-block" type="Submit" th:text="#{reset}">reset</button></td>
+            </tr>
+        </table>
+        </form>
         <table>
             <tr>
-                <td><input type="text" id="name" name="name" th:placeholder="name" /></td>
-                <td><input type="submit" value="Search" name="button"/></td>
+                <th th:text="#{componentId}">id</th>
+                <th th:text="#{componentName}">name</th>
+                <th th:text="#{componentCount}">count</th>
+                <th:block th:switch="${sorting}">
+                    <th th:case=0>
+                        <a th:href="@{/?sort={newSort}(newSort=${1})}" th:text="#{componentPrimaryNone}"></a>
+                    </th>
+                    <th th:case=1>
+                        <a th:href="@{/?sort={newSort}(newSort=${2})}" th:text="#{componentPrimaryAsc}"></a>
+                    </th>
+                    <th th:case=2>
+                        <a th:href="@{/?sort={newSort}(newSort=${0})}" th:text="#{componentPrimaryDesc}"></a>
+                    </th>
+                    <th th:case="*">
+                        <a th:href="@{/?sort={newSort}(newSort=${1})}" th:text="#{componentPrimaryNone}">need</a>
+                    </th>
+                </th:block>
+                <!--<th th:text="#{componentPrimary}">primary</th>-->
+                <th th:text="#{componentEdit}">edit</th>
+                <th th:text="#{componentDelete}">delete</th>
             </tr>
-
+            <tr th:each="componentItem : ${components}">
+                <td th:text="${componentItem.id}"></td>
+                <td th:text="${componentItem.name}"></td>
+                <td th:text="${componentItem.count}"></td>
+                <td th:text="${componentItem.need}?#{isPrimary}:#{isNotPrimary}"></td>
+                <td><a th:href="@{/component/edit/{id}(id=${componentItem.id})}" th:text="#{edit}">edit</a></td>
+                <td><a th:href="@{/component/delete/{id}(id=${componentItem.id})}" th:text="#{delete}">delete</a></td>
+            </tr>
+            <form action="#" th:action="@{/component/update}" th:object="${component}"   method="post">
+                <!--<table>-->
+                    <tr>
+                        <td>+</td>
+                        <td><input type="text" th:field="*{name}"  /></td>
+                        <td><input type="text" th:field="*{count}"  /></td>
+                        <td><input type="checkbox" th:field="*{need}" /></td>
+                        <td><input type="submit" value="Update" name="button"/></td>
+                        <td></td>
+                    </tr>
+                <!--</table>-->
+            </form>
         </table>
-    </form>
-    <form th:action="@{/}" method="get">
-    <table>
-        <tr th:if="${searching} != null">
-            <td><p>Search: <span th:text="*{searching}">Поиск:</span>.</p></td>
-            <td><button class="btn btn-md btn-warning btn-block" type="Submit" th:text="#{reset}">reset</button></td>
-        </tr>
-    </table>
-    </form>
-    <table>
-        <tr>
-            <th th:text="#{componentId}">id</th>
-            <th th:text="#{componentName}">name</th>
-            <th th:text="#{componentCount}">count</th>
-            <th:block th:switch="${sorting}">
-                <th th:case=0>
-                    <a th:href="@{/?sort={newSort}(newSort=${1})}" th:text="#{componentPrimaryNone}">delete</a>
-                </th>
-                <th th:case=1>
-                    <a th:href="@{/?sort={newSort}(newSort=${2})}" th:text="#{componentPrimaryAsc}">delete</a>
-                </th>
-                <th th:case=2>
-                    <a th:href="@{/?sort={newSort}(newSort=${0})}" th:text="#{componentPrimaryDesc}">delete</a>
-                </th>
-                <th th:case="*">
-                    <a th:href="@{/?sort={newSort}(newSort=${1})}" th:text="#{componentPrimaryNone}">delete</a>
-                </th>
-            </th:block>
-            <!--<th th:text="#{componentPrimary}">primary</th>-->
-            <th th:text="#{componentEdit}">edit</th>
-            <th th:text="#{componentDelete}">delete</th>
-        </tr>
-        <tr th:each="componentItem : ${components}">
-            <td th:text="${componentItem.id}"></td>
-            <td th:text="${componentItem.name}"></td>
-            <td th:text="${componentItem.count}"></td>
-            <td th:text="${componentItem.need}?#{isPrimary}:#{isNotPrimary}"></td>
-            <td><a th:href="@{/component/edit/{id}(id=${componentItem.id})}" th:text="#{edit}">edit</a></td>
-            <td><a th:href="@{/component/delete/{id}(id=${componentItem.id})}" th:text="#{delete}">delete</a></td>
-        </tr>
-        <form action="#" th:action="@{/component/update}" th:object="${component}"   method="post">
-            <!--<table>-->
-                <tr>
-                    <td></td>
-                    <td><input type="text" th:field="*{name}"  /></td>
-                    <td><input type="text" th:field="*{count}"  /></td>
-                    <td><input type="checkbox" th:field="*{need}" /></td>
-                    <td><input type="submit" value="Update" name="button"/></td>
-                    <td></td>
-                </tr>
-            <!--</table>-->
-        </form>
-    </table>
-    <table>
-        <tr th:if="${count} != null">
-            <td><p><span th:text="#{total}"></span>: <span th:text="*{count}"></span>.</p></td>
-        </tr>
-    </table>
-    <table>
-        <tr >
-            <td th:text="#{pages}">Pages: </td>
-            <td th:each="page : ${pages}"><a th:href="@{/{pageNum}(pageNum=${page})}" th:text="${page}">-</a></td>
-        </tr>
-    </table>
+        <table>
+            <tr th:if="${count} != null">
+                <td><p><span th:text="#{total}"></span>: <span th:text="*{count}"></span>.</p></td>
+            </tr>
+        </table>
+        <table>
+            <tr >
+                <td th:text="#{pages}">Pages: </td>
+                <td th:each="page : ${pages}"><a th:href="@{/{pageNum}(pageNum=${page})}" th:text="${page}">-</a></td>
+            </tr>
+        </table>
+        </div>
+        <div class="col-sm">
+        </div>
+    </div>
+</div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 </body>
 </html>
