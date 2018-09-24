@@ -31,18 +31,28 @@ public class TestController {
     //@RequestMapping - Аннотация используется для маппинга url-адреса запроса на указанный метод или класс.
     // Можно указывать конкретный HTTP-метод, который будет обрабатываться (GET/POST), передавать параметры запроса.
     @RequestMapping(value={"/","/{pagenum}"}, method = RequestMethod.GET)
-    public ModelAndView mainscreen(@PathVariable Optional<Integer> pagenum,@RequestParam(value = "sort", required = false) String sort) {
+    public ModelAndView mainscreen(@PathVariable Optional<Integer> pagenum,@RequestParam(value = "sort", required = false) Integer sort) {
         ModelAndView modelAndView = new ModelAndView();
         List<ComputerComponent> components = new ArrayList<>();
         Sort.Direction sortDirection = null;
-        if (sort != null){
-            if (sort.equals("asc")){
-                sortDirection = Sort.Direction.ASC;
-            }else{
-                sortDirection = Sort.Direction.DESC;
+        Integer newSort = 0;
+        if (sort != null) {
+            switch (sort) {
+                case 1: {
+                    sortDirection = Sort.Direction.ASC;
+                    newSort = 2;
+                    break;
+                }
+                case 2: {
+                    sortDirection = Sort.Direction.DESC;
+                    newSort = 0;
+                    break;
+                }
+                default: {
+                    newSort = 1;
+                }
             }
         }
-
         if (pagenum.isPresent()) {
             components.addAll(service.getpaged(pagenum.get(), itemsOnPage, sortDirection));
         }else{
@@ -53,6 +63,7 @@ public class TestController {
         for (int i = 0; i < Math.ceil((float)service.getCount()/itemsOnPage); i++){
             pages.add(i);
         }
+        modelAndView.addObject("sorting", sort);
         modelAndView.addObject("component", new ComputerComponent());
         modelAndView.addObject("pages", pages);
         modelAndView.addObject("components", components);
@@ -74,13 +85,6 @@ public class TestController {
     @RequestMapping(value={"/component/delete/{id}"}, method = RequestMethod.GET)
     public String deleteComponent(@PathVariable Integer id) {
         service.deleteById(id);
-//        ModelAndView modelAndView = new ModelAndView();
-//        List<ComputerComponent> components = new ArrayList<>();
-//        components.addAll(service.getAllComponents());
-//        modelAndView.addObject("components", components);
-//        modelAndView.addObject("count", getComputersCount());
-//        modelAndView.setViewName("list");
-//        return modelAndView;
         return "redirect:/";
     }
 
@@ -88,13 +92,6 @@ public class TestController {
     @RequestMapping(value={"/component/update"}, method = RequestMethod.POST)
     public String updateComponent(@Valid ComputerComponent component, BindingResult bindingResult) {
         service.saveComponent(component);
-//        ModelAndView modelAndView = new ModelAndView();
-//        List<ComputerComponent> components = new ArrayList<>();
-//        components.addAll(service.getAllComponents());
-//        modelAndView.addObject("components", components);
-//        modelAndView.addObject("count", getComputersCount());
-//        modelAndView.setViewName("list");
-//        return modelAndView;
         return "redirect:/";
     }
 

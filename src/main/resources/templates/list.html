@@ -29,7 +29,21 @@
             <th th:text="#{componentId}">id</th>
             <th th:text="#{componentName}">name</th>
             <th th:text="#{componentCount}">count</th>
-            <th th:text="#{componentPrimary}">primary</th>
+            <th:block th:switch="${sorting}">
+                <th th:case=0>
+                    <a th:href="@{/?sort={newSort}(newSort=${1})}" th:text="#{componentPrimaryNone}">delete</a>
+                </th>
+                <th th:case=1>
+                    <a th:href="@{/?sort={newSort}(newSort=${2})}" th:text="#{componentPrimaryAsc}">delete</a>
+                </th>
+                <th th:case=2>
+                    <a th:href="@{/?sort={newSort}(newSort=${0})}" th:text="#{componentPrimaryDesc}">delete</a>
+                </th>
+                <th th:case="*">
+                    <a th:href="@{/?sort={newSort}(newSort=${1})}" th:text="#{componentPrimaryNone}">delete</a>
+                </th>
+            </th:block>
+            <!--<th th:text="#{componentPrimary}">primary</th>-->
             <th th:text="#{componentEdit}">edit</th>
             <th th:text="#{componentDelete}">delete</th>
         </tr>
@@ -40,16 +54,6 @@
             <td th:text="${componentItem.need}?#{isPrimary}:#{isNotPrimary}"></td>
             <td><a th:href="@{/component/edit/{id}(id=${componentItem.id})}" th:text="#{edit}">edit</a></td>
             <td><a th:href="@{/component/delete/{id}(id=${componentItem.id})}" th:text="#{delete}">delete</a></td>
-            <!--<td>-->
-                <!--<form action="#" th:action="@{/component/edit/{id}(id=${componentItem.id})}}"  method="post">-->
-                    <!--<button class="btn btn-md btn-warning btn-block" type="edit">edit</button>-->
-                <!--</form>-->
-            <!--</td>-->
-            <!--<td>-->
-                <!--<form action="#" th:action="@{/component/delete/{id}(id=${componentItem.id})}}"  method="post">-->
-                    <!--<button class="btn btn-md btn-warning btn-block" type="edit">delete</button>-->
-                <!--</form>-->
-            <!--</td>-->
         </tr>
         <form action="#" th:action="@{/component/update}" th:object="${component}"   method="post">
             <!--<table>-->
@@ -64,17 +68,6 @@
             <!--</table>-->
         </form>
     </table>
-    <!--<form action="#" th:action="@{/component/update}" th:object="${component}"   method="post">-->
-        <!--<table>-->
-            <!--<tr>-->
-                <!--<td></td>-->
-                <!--<td><input type="text" th:field="*{name}"  /></td>-->
-                <!--<td><input type="text" th:field="*{count}"  /></td>-->
-                <!--<td><input type="checkbox" th:field="*{primary}" /></td>-->
-                <!--<td><input type="submit" value="Update" name="button"/></td>-->
-            <!--</tr>-->
-        <!--</table>-->
-    <!--</form>-->
     <table>
         <tr th:if="${count} != null">
             <td><p><span th:text="#{total}"></span>: <span th:text="*{count}"></span>.</p></td>
